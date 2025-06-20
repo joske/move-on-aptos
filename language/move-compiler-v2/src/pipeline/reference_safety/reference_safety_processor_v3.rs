@@ -1062,7 +1062,7 @@ impl<'env> TransferFunctions for LifeTimeAnalysis<'env> {
                     BorrowLoc => {
                         step.borrow_local(dests[0], srcs[0]);
                     },
-                    BorrowGlobal(mid, sid, inst) => {
+                    BorrowGlobal(mid, sid, inst, _) => {
                         step.borrow_global(
                             mid.qualified_inst(*sid, inst.clone()),
                             dests[0],

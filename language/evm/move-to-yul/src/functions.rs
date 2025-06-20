@@ -411,7 +411,7 @@ impl<'a> FunctionGenerator<'a> {
                             local(&srcs[0]),
                         )
                     },
-                    BorrowGlobal(m, s, inst) => {
+                    BorrowGlobal(m, s, inst, _) => {
                         print_loc();
                         self.borrow_global(
                             ctx,

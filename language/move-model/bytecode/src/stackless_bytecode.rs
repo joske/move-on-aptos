@@ -200,7 +200,7 @@ pub enum Operation {
     // Borrow
     BorrowLoc,
     BorrowField(ModuleId, StructId, Vec<Type>, usize),
-    BorrowGlobal(ModuleId, StructId, Vec<Type>),
+    BorrowGlobal(ModuleId, StructId, Vec<Type>, bool),
 
     // Builtins
     /// Indicates that the value is dropped.
@@ -300,7 +300,7 @@ impl Operation {
             Operation::Exists(_, _, _) => false,
             Operation::BorrowLoc => false,
             Operation::BorrowField(_, _, _, _) => false,
-            Operation::BorrowGlobal(_, _, _) => true,
+            Operation::BorrowGlobal(_, _, _, _) => true,
             Operation::GetField(_, _, _, _) => false,
             Operation::GetVariantField(_, _, _, _, _) => true, // aborts if not given variant
             Operation::GetGlobal(_, _, _) => true,
@@ -830,8 +830,8 @@ impl Bytecode {
                     Exists(mid, sid, tys) => {
                         Exists(*mid, *sid, Type::instantiate_slice(tys, params))
                     },
-                    BorrowGlobal(mid, sid, tys) => {
-                        BorrowGlobal(*mid, *sid, Type::instantiate_slice(tys, params))
+                    BorrowGlobal(mid, sid, tys, is_mut) => {
+                        BorrowGlobal(*mid, *sid, Type::instantiate_slice(tys, params), *is_mut)
                     },
                     GetGlobal(mid, sid, tys) => {
                         GetGlobal(*mid, *sid, Type::instantiate_slice(tys, params))
@@ -1235,8 +1235,12 @@ impl<'env> fmt::Display for OperationDisplay<'env> {
                     field_env.get_name().display(struct_env.symbol_pool())
                 )?;
             },
-            BorrowGlobal(mid, sid, targs) => {
-                write!(f, "borrow_global<{}>", self.struct_str(*mid, *sid, targs))?;
+            BorrowGlobal(mid, sid, targs, is_mut) => {
+                write!(
+                    f,
+                    "borrow_global<{}> ({is_mut})",
+                    self.struct_str(*mid, *sid, targs)
+                )?;
             },
             GetField(mid, sid, targs, offset) => {
                 write!(f, "get_field<{}>", self.struct_str(*mid, *sid, targs))?;

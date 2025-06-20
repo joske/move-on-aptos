@@ -753,13 +753,14 @@ impl<'env> Generator<'env> {
                     args,
                 )
             },
-            Operation::BorrowGlobal(_) => {
+            Operation::BorrowGlobal(kind) => {
                 let inst = self.env().get_node_instantiation(id);
                 let (mid, sid, inst) = inst[0].require_struct();
+                let is_mut = *kind == ReferenceKind::Mutable;
                 self.gen_op_call(
                     targets,
                     id,
-                    BytecodeOperation::BorrowGlobal(mid, sid, inst.to_owned()),
+                    BytecodeOperation::BorrowGlobal(mid, sid, inst.to_owned(), is_mut),
                     args,
                 )
             },

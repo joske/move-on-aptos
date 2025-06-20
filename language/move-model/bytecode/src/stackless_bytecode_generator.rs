@@ -1379,6 +1379,7 @@ impl<'a> StacklessBytecodeGenerator<'a> {
                         self.func_env.module_env.get_id(),
                         self.func_env.module_env.get_struct_id(*idx),
                         vec![],
+                        is_mut,
                     ),
                     temp_index,
                     operand_index,
@@ -1414,6 +1415,7 @@ impl<'a> StacklessBytecodeGenerator<'a> {
                             .module_env
                             .get_struct_id(struct_instantiation.def),
                         actuals,
+                        is_mut,
                     ),
                     temp_index,
                     operand_index,

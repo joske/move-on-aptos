@@ -207,7 +207,7 @@ impl<'a> TransferFunctions for MemoryUsageAnalysis<'a> {
                 },
                 MoveTo(mid, sid, inst)
                 | MoveFrom(mid, sid, inst)
-                | BorrowGlobal(mid, sid, inst) => {
+                | BorrowGlobal(mid, sid, inst, _) => {
                     let mem = mid.qualified_inst(*sid, inst.to_owned());
                     state.add_direct_modified(mem);
                 },

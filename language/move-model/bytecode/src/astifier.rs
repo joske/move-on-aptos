@@ -999,7 +999,7 @@ impl Generator {
                 let rhs = self.make_temp(ctx, srcs[0]);
                 self.gen_match(ctx, dests, qsid, Some(*variant), rhs);
             },
-            BorrowGlobal(_, _, inst) => self.gen_call_stm(
+            BorrowGlobal(_, _, inst, _) => self.gen_call_stm(
                 ctx,
                 Some(inst),
                 dests,
