@@ -1034,6 +1034,8 @@ impl<'env> SpecTranslator<'env> {
             | Operation::BorrowGlobal(_)
             | Operation::Borrow(..)
             | Operation::Deref
+            | Operation::Release
+            | Operation::Drop
             | Operation::MoveTo
             | Operation::MoveFrom
             | Operation::EarlyBind

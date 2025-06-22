@@ -1873,6 +1873,8 @@ pub enum Operation {
 
     // Builtin functions (impl and spec)
     Exists(Option<MemoryLabel>),
+    Release,
+    Drop,
 
     // Builtin functions (impl only)
     BorrowGlobal(ReferenceKind),
@@ -2715,6 +2717,8 @@ impl Operation {
 
             // Builtin functions (impl and spec)
             Exists(..) => false, // Spec
+            Release => false,    // Spec
+            Drop => false,       // Spec
 
             // Builtin functions (impl only)
             BorrowGlobal(..) => false, // Move-related

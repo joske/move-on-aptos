@@ -1042,9 +1042,8 @@ impl Generator {
                     srcs,
                 )
             },
-            Drop | Release => {
-                // Do nothing
-            },
+            Drop => self.gen_call_stm(ctx, None, dests, Operation::Drop, srcs),
+            Release => self.gen_call_stm(ctx, None, dests, Operation::Release, srcs),
             ReadRef => self.gen_call_stm(ctx, None, dests, Operation::Deref, srcs),
             WriteRef => {
                 let stm = ExpData::Mutate(
